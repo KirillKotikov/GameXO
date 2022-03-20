@@ -21,14 +21,14 @@ import java.io.FileOutputStream;
 // Парсер для записи и чтения истории игры в формате XML
 public class XmlParser implements Parser {
     @Override
-    public void print(String fileName) {
+    public String print(File fileName) {
+        StringBuilder stringBuilder = new StringBuilder();
 
         Player winner = new Player();
         try {
-            File inputFile = new File(fileName);
             DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
             DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
-            Document doc = dBuilder.parse(inputFile);
+            Document doc = dBuilder.parse(fileName);
             doc.getDocumentElement().normalize();
             String result = "";
 
@@ -67,18 +67,20 @@ public class XmlParser implements Parser {
                 playingField[coordinates[0]][coordinates[1]] = "|" + playerChar + "|";
                 for (String[] charsX : playingField) {
                     for (String charsY : charsX) {
-                        System.out.print(charsY + " ");
+                        stringBuilder.append(charsY).append(" ");
                     }
-                    System.out.println();
+                    stringBuilder.append("\n");
                 }
-                System.out.println();
-
+                stringBuilder.append("\n");
             }
-            System.out.println(result);
+            stringBuilder.append(result);
 
         } catch (Exception e) {
             e.printStackTrace();
         }
+        // Обнуляем игровое поле
+        GameXO.refreshPlayingField(playingField);
+        return stringBuilder.toString();
     }
 
     @Override

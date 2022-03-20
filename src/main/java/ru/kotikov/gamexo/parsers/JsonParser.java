@@ -17,7 +17,8 @@ public class JsonParser implements Parser {
 
     // Выводит в консоль историю игры по определенному шаблону
     @Override
-    public void print(String fileName) {
+    public String print(File fileName) {
+        StringBuilder stringBuilder = new StringBuilder();
         try {
             // Создаем объект JSONParser(
             Object obj = new JSONParser().parse(new FileReader(fileName));
@@ -45,26 +46,29 @@ public class JsonParser implements Parser {
                 // выводим поле на экран
                 for (String[] charsX : playingField) {
                     for (String charsY : charsX) {
-                        System.out.print(charsY + " ");
+                        stringBuilder.append(charsY).append(" ");
                     }
-                    System.out.println();
+                    stringBuilder.append("\n");
                 }
-                System.out.println();
+                stringBuilder.append("\n");
             }
             // Пробуем определить наличие победителя
             try {
                 JSONObject gameResult = (JSONObject) gameplay.get("gameResult");
                 JSONObject player = (JSONObject) gameResult.get("player");
-                System.out.println("Player " + player.get("id") + " -> " +
+                stringBuilder.append("Player " + player.get("id") + " -> " +
                         player.get("name") + " is winner as '"
-                        + player.get("symbol") + "'!");
+                        + player.get("symbol") + "'!" + "\n");
                 // если в файле нет графы с игроком, то значит ничья и выводим данную информацию
             } catch (ClassCastException e) {
-                System.out.println("Draw!");
+                stringBuilder.append("Draw!");
             }
         } catch (IOException | ParseException e) {
             e.printStackTrace();
         }
+        // Обнуляем игровое поле
+        GameXO.refreshPlayingField(playingField);
+        return stringBuilder.toString();
     }
 
     // Записывает историю игры по определенному шаблону в файл GameHistory_номер файла.json в корень проекта

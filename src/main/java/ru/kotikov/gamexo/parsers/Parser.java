@@ -1,5 +1,7 @@
 package ru.kotikov.gamexo.parsers;
 
+import java.io.File;
+
 // Парсер для чтения истории игры
 public interface Parser {
     String[][] playingField = new String[][]{
@@ -8,7 +10,7 @@ public interface Parser {
             {"|7|", "|8|", "|9|"}
     };
 
-    void print(String fileName);
+    String print(File fileName);
 
     void write(Object object);
 }
