@@ -1,11 +1,13 @@
 package ru.kotikov.gamexo.services;
 
+import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 
+@Service
 public class FileService {
 
     // Конвертирует MultipartFile в File

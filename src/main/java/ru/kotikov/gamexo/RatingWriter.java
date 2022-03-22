@@ -7,11 +7,11 @@ import java.util.ArrayList;
 
 public class RatingWriter {
 
-    public static void writeRating() {
+    public static void writeRating(PlayerWithStat playerX, PlayerWithStat playerO) {
         // Создаем список и добавляем туда игроков прошедшей игры
         ArrayList<PlayerWithStat> rating = new ArrayList<>();
-        rating.add(GameXO.FIRST_PLAYER);
-        rating.add(GameXO.SECOND_PLAYER);
+        rating.add(playerX);
+        rating.add(playerO);
 
         // Создаем, если не существует, или подключаем файл "rating.txt" для записи рейтинга
         File fileRating = new File("rating.txt");

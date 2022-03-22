@@ -2,7 +2,8 @@ package ru.kotikov.gamexo.controllers;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import ru.kotikov.gamexo.parsers.JsonParser;
 import ru.kotikov.gamexo.parsers.XmlParser;
@@ -13,15 +14,9 @@ import java.io.File;
 @Controller
 public class ReadFileController {
 
-    // Главная страница с кнопками для загрузки файла
-    @GetMapping("/")
-    public String readFile() {
-        return "uploadFile";
-    }
-
     // обработка файла и отображение истории игры в браузере
     @PostMapping("/printFile")
-    public String printFile (@RequestParam("file") MultipartFile file, Model model) {
+    public String printFile(@RequestParam("file") MultipartFile file, Model model) {
 
         String gameHistory;
         String tittle = "История игры из файла:";
@@ -40,7 +35,7 @@ public class ReadFileController {
         }
         String[] result = gameHistory.split("\n");
         model.addAttribute("result", result);
-        model.addAttribute("tittle",tittle);
+        model.addAttribute("tittle", tittle);
         return "printFile";
     }
 }

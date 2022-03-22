@@ -113,16 +113,16 @@ public class XmlParser implements Parser {
             // добавляем игрока X в историю <Player>
             writer.writeEmptyElement("Player");
             // Устанавливаем атрибуты
-            writer.writeAttribute("id", GameXO.FIRST_PLAYER.getId());
-            writer.writeAttribute("name", GameXO.FIRST_PLAYER.getName());
-            writer.writeAttribute("symbol", GameXO.FIRST_PLAYER.getSymbol());
+            writer.writeAttribute("id", winGameHistory.getWinGameplay().getPlayers()[0].getId());
+            writer.writeAttribute("name", winGameHistory.getWinGameplay().getPlayers()[0].getName());
+            writer.writeAttribute("symbol", winGameHistory.getWinGameplay().getPlayers()[0].getSymbol());
             writer.writeCharacters("\n  ");
             // добавляем игрока O в историю <Player>
             writer.writeEmptyElement("Player");
             // Устанавливаем атрибуты
-            writer.writeAttribute("id", GameXO.SECOND_PLAYER.getId());
-            writer.writeAttribute("name", GameXO.SECOND_PLAYER.getName());
-            writer.writeAttribute("symbol", GameXO.SECOND_PLAYER.getSymbol());
+            writer.writeAttribute("id", winGameHistory.getWinGameplay().getPlayers()[1].getId());
+            writer.writeAttribute("name", winGameHistory.getWinGameplay().getPlayers()[1].getName());
+            writer.writeAttribute("symbol", winGameHistory.getWinGameplay().getPlayers()[1].getSymbol());
             writer.writeCharacters("\n  ");
 
             // Добавляем ход игры <Game> в историю

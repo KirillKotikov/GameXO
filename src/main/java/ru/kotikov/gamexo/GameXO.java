@@ -218,7 +218,7 @@ public class GameXO {
         while (true) {
             String answerRating = ratingScanner.next();
             if (answerRating.equalsIgnoreCase("да")) {
-                RatingWriter.writeRating();
+                RatingWriter.writeRating(FIRST_PLAYER,SECOND_PLAYER);
                 System.out.println("Рейтинг успешно сохранен!");
                 break;
             } else if (!answerRating.equalsIgnoreCase("нет")) {

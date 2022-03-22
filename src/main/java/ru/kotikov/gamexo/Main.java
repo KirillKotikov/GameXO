@@ -4,11 +4,33 @@ package ru.kotikov.gamexo;
 import ru.kotikov.gamexo.parsers.JsonParser;
 import ru.kotikov.gamexo.parsers.XmlParser;
 
+import javax.swing.*;
+import java.awt.*;
 import java.io.File;
 
 public class Main {
 
     public static void main(String[] args) {
+
+//        // создаем окно для воспроизведения игры
+//        JFrame window = new JFrame("GameXO");
+//        // создаем кнопку для закрытия окна
+//        window.setDefaultCloseOperation((WindowConstants.EXIT_ON_CLOSE));
+//        // устанавливаем размеры окна
+//        window.setSize(400,400);
+//        // менеджер компановки
+//        window.setLayout(new BorderLayout());
+//        // делаем, чтобы отображалось по центру
+//        window.setLocationRelativeTo(null);
+//        // делаем окно видимым
+//        window.setVisible(true);
+//
+//        RestGame restGame = new RestGame();
+//
+//        window.add(restGame);
+
+
+
 
         // Запуск игры
 //        GameXO.game();
