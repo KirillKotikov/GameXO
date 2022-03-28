@@ -11,9 +11,9 @@
     <a th:text="${line}"><small></small></a><br>
 </div>
 <br>
-<form method="post" enctype="multipart/form-data" th:action="'/printFile'">
+<form method="post" enctype="multipart/form-data" th:action="'/print-file'">
     <label for="file">Выберите .xml или .json файл с историей игры "Крестики-нолики" для отображения:</label> <br><br>
-    <input type="file" id="file" name="file"><br>
+    <input type="file" id="file" name="file" accept=".xml,.json" required><br>
     <input type="submit">
 </form> <br>
 <form th:action="'/'" method="get">

@@ -2,6 +2,7 @@ package ru.kotikov.gamexo.controllers;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
@@ -15,10 +16,10 @@ import java.io.File;
 public class ReadFileController {
 
     // обработка файла и отображение истории игры в браузере
-    @PostMapping("/printFile")
+    @PostMapping("/print-file")
     public String printFile(@RequestParam("file") MultipartFile file, Model model) {
 
-        String gameHistory;
+        String gameHistory = "";
         String tittle = "История игры из файла:";
         if (!file.isEmpty()) {
             File inFile = FileService.convert(file);
@@ -26,9 +27,10 @@ public class ReadFileController {
                 gameHistory = new XmlParser().print(inFile);
             } else if (file.getOriginalFilename().endsWith(".json")) {
                 gameHistory = new JsonParser().print(inFile);
-            } else {
+            }
+            if (gameHistory.equals("")) {
                 tittle = "";
-                gameHistory = "Вы вставили файл недопустимого формата - " + file.getOriginalFilename() + ".";
+                gameHistory = "Вы вставили файл без истории игры или неправильно структурированный - " + file.getOriginalFilename() + ".";
             }
         } else {
             return "Вам не удалось загрузить " + file.getOriginalFilename() + ", файл пустой.";
@@ -36,6 +38,11 @@ public class ReadFileController {
         String[] result = gameHistory.split("\n");
         model.addAttribute("result", result);
         model.addAttribute("tittle", tittle);
+        return "printFile";
+    }
+
+    @GetMapping("/print-file")
+    public String printPage() {
         return "printFile";
     }
 }

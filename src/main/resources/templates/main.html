@@ -7,14 +7,14 @@
 </head>
 <body class="container mt-5">
 <p><strong>Привет! Добро пожаловать в игру крестики-нолики:)</strong></p><br>
-<form th:action="'/game'" method="get">
+<form th:action="'/gameplay'" method="get">
     <p><strong>Запуск игры Крестики-нолики:</strong></p>
     <button type="submit">Запуск</button>
 </form><br>
-<form method="post" enctype="multipart/form-data" th:action="'/printFile'">
+<form method="post" enctype="multipart/form-data" th:action="'/print-file'">
     <p><strong>Отображение истории игры из файла:</strong></p>
     <label for="file">Выберите .xml или .json файл с историей игры "Крестики-нолики" для отображения.</label> <br>
-    <input type="file" id="file" name="file"><br>
+    <input type="file" id="file" name="file" required accept=".xml,.json"><br>
     <input type="submit">
 </form>
 

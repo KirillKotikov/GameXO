@@ -11,7 +11,7 @@
   </style>
 </head>
 <body class="container mt-5">
-<form th:action="'/game/new-field'" method="post">
+<form th:action="'/gameplay/new-field'" method="post">
   <label for="nameX"><strong>Введите имя первого игрока (Ходит крестиками):</strong></label><br>
   <input type="text" id="nameX" name="nameX" placeholder="Имя игрока X" required>
   <a class="red" th:text="${nameXNull}"></a><br>

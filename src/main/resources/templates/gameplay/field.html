@@ -11,7 +11,7 @@
     <strong><a th:text="${f}"></a></strong><br>
 </div>
 <br>
-<form th:action="'/game/field'" method="post">
+<form th:action="'/gameplay/field'" method="post">
     <strong><a th:text="${name} + ' (крестики), твой ход! Введи свободные координаты хода (число от 1 до 9 включительно):'"></a></strong><br><br>
     <input autofocus type="text" name="coordinate" placeholder="введи число 1-9" required>
     <button type="submit">Отправить координаты</button>

@@ -11,13 +11,13 @@ import ru.kotikov.gamexo.services.GameService;
 @Controller
 public class GameController {
     // Отображает страницу с вводом имен игроков
-    @GetMapping("/game")
+    @GetMapping("/gameplay")
     public String startGame() {
-        return "game/start";
+        return "gameplay/start";
     }
 
     // Проверяет валидность введенных имен и переносит на страницу для хода
-    @PostMapping("/game/new-field")
+    @PostMapping("/gameplay/new-field")
     public String registration(@RequestParam(name = "nameX") String nameX, @RequestParam(name = "nameO") String nameO, Model model) {
         String nameXNull, nameONull;
         if (nameX.trim().isEmpty()) {
@@ -27,21 +27,21 @@ public class GameController {
                 nameONull = "Ты ввёл пустую строку:(";
                 model.addAttribute("nameONull", nameONull);
             }
-            return "/game/repeatName";
+            return "/gameplay/repeatName";
         }
         if (nameO.trim().isEmpty()) {
             nameONull = "Ты ввёл пустую строку:(";
             model.addAttribute("nameONull", nameONull);
-            return "/game/repeatName";
+            return "/gameplay/repeatName";
         }
         GameService.setNames(nameX, nameO);
         model.addAttribute("field", GameService.showPlayingField(GameService.PLAYING_FIELD));
         model.addAttribute("name", GameService.getMoveName());
-        return "/game/field";
+        return "/gameplay/field";
     }
 
     // Обновляет страницу с полем и ходом игрока
-    @PostMapping("/game/field")
+    @PostMapping("/gameplay/field")
     public String move(@RequestParam(name = "coordinate") String coordinate, Model model) {
         // сообщение при возникновении ошибки
         String message;
@@ -50,7 +50,7 @@ public class GameController {
             message = GameService.notValid;
             model.addAttribute("message", message);
             model.addAttribute("name", GameService.getMoveName());
-            return "/game/repeatField";
+            return "/gameplay/repeatField";
         }
         // проверяем ни занято ли поле
         if (GameService.freeField(GameService.coordinateValid(coordinate)[0],
@@ -62,7 +62,7 @@ public class GameController {
             model.addAttribute("message", message);
             model.addAttribute("name", GameService.getMoveName());
             model.addAttribute("field", GameService.showPlayingField(GameService.PLAYING_FIELD));
-            return "/game/repeatField";
+            return "/gameplay/repeatField";
         }
         // ищем победителя или ничью
         if (GameService.movesCounter > 5 && GameService.movesCounter < 9) {
@@ -74,18 +74,18 @@ public class GameController {
         if (GameService.gameOver) {
             message = GameService.result();
             model.addAttribute("message", message);
-            return "/game/result";
+            return "/gameplay/result";
         }
         // продолжаем игру если она не окончена
         else {
             GameService.movesCounter++;
             model.addAttribute("name", GameService.getMoveName());
-            return "/game/field";
+            return "/gameplay/field";
         }
     }
 
     // получаем ответы игрока по поводу сохранения истории игры и начала новой
-    @PostMapping("/game/result")
+    @PostMapping("/gameplay/result")
     public String result(@RequestParam(name = "saveH") String saveH, @RequestParam(name = "fileFormat", defaultValue = "Нет") String fileFormat,
                          @RequestParam(name = "newGame") String newGame, Model model) {
         String save = "";
@@ -98,24 +98,24 @@ public class GameController {
         if (newGame.equalsIgnoreCase("Да")) {
             // очищаем все поля игры
             GameService.clearAll();
-            return "redirect:/game/new-field";
+            return "redirect:/gameplay/new-field";
         } else // закрытие игры
             model.addAttribute("save", save);
         model.addAttribute("message", "Спасибо за игру! Заходите поиграть еще!");
-        return "/game/finalResult";
+        return "/gameplay/finalResult";
     }
 
     // начала нового матча с сохранением имен и статистики игроков
-    @GetMapping("/game/new-field")
+    @GetMapping("/gameplay/new-field")
     public String newField(Model model) {
         // сохраняем игровое поле для отображения
         model.addAttribute("field", GameService.showPlayingField(GameService.PLAYING_FIELD));
         model.addAttribute("name", GameService.getMoveName());
-        return "/game/field";
+        return "/gameplay/field";
     }
 
     // Реашем вопрос сохранения рейтинга и заканчиваем игру
-    @PostMapping("/game/final-result")
+    @PostMapping("/gameplay/final-result")
     public String finalResult(@RequestParam(name = "saveR") String saveR, Model model) {
         String message = "";
         if (saveR.equalsIgnoreCase("Да")) {
@@ -123,7 +123,7 @@ public class GameController {
             message = "Рейтинг успешно сохранен! ";
         }
         model.addAttribute("message", message);
-        return "/game/goodBye";
+        return "/gameplay/goodBye";
     }
 }
 
