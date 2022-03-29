@@ -47,12 +47,12 @@ public class GameService {
     }
 
     // получение имени игрока, который сейчас ходит
-    public static String getMoveName() {
+    public static Player getMovePlayer() {
         // Оповещение об очередности хода
         if (movesCounter % 2 == 1) {
-            return FIRST_PLAYER.getName();
+            return FIRST_PLAYER;
         } else {
-            return SECOND_PLAYER.getName();
+            return SECOND_PLAYER;
         }
     }
 
@@ -72,7 +72,7 @@ public class GameService {
     public static int[] coordinateValid(String coordinate) {
         // Проверка координат на длину
         if (coordinate.length() != 1) {
-            notValid = "ай-яй " + getMoveName() + ":) ввел какую-то ерунду! Введи нормальные свободные координаты (число от 1 до 9 включительно)";
+            notValid = "ай-яй " + getMovePlayer() + ":) ввел какую-то ерунду! Введи нормальные свободные координаты (число от 1 до 9 включительно)";
         }
         // Переменные для координат хода на поле
         int x = 9, y = 9;

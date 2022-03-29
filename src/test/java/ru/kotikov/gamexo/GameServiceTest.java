@@ -30,14 +30,14 @@ public class GameServiceTest {
     @Test
     public void moveNameShouldBeFirstPlayerName() {
         GameService.setNames("Kirill", "Alena");
-        Assert.assertEquals(FIRST_PLAYER.getName(), GameService.getMoveName());
+        Assert.assertEquals(FIRST_PLAYER.getName(), GameService.getMovePlayer());
     }
 
     @Test
     public void moveCharShouldBeO() {
         GameService.setNames("Kirill", "Alena");
         GameService.movesCounter = 2;
-        Assert.assertEquals(SECOND_PLAYER.getName(), GameService.getMoveName());
+        Assert.assertEquals(SECOND_PLAYER.getName(), GameService.getMovePlayer());
     }
 
     // должен возвращать игровое поле в одномерном массиве

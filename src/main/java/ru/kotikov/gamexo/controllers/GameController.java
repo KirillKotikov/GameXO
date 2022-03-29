@@ -36,7 +36,10 @@ public class GameController {
         }
         GameService.setNames(nameX, nameO);
         model.addAttribute("field", GameService.showPlayingField(GameService.PLAYING_FIELD));
-        model.addAttribute("name", GameService.getMoveName());
+        model.addAttribute("name", GameService.getMovePlayer().getName());
+        if (GameService.getMovePlayer().getSymbol().equals("X")){
+            model.addAttribute("symbol", "крестики");
+        } else model.addAttribute("symbol", "нолики");
         return "/gameplay/field";
     }
 
@@ -49,7 +52,10 @@ public class GameController {
         if (GameService.coordinateValid(coordinate)[0] == 9) {
             message = GameService.notValid;
             model.addAttribute("message", message);
-            model.addAttribute("name", GameService.getMoveName());
+            model.addAttribute("name", GameService.getMovePlayer().getName());
+            if (GameService.getMovePlayer().getSymbol().equals("X")){
+                model.addAttribute("symbol", "крестики");
+            } else model.addAttribute("symbol", "нолики");
             return "/gameplay/repeatField";
         }
         // проверяем ни занято ли поле
@@ -60,12 +66,15 @@ public class GameController {
         } else {
             message = "Эта ячейка занята! Выбери другую!";
             model.addAttribute("message", message);
-            model.addAttribute("name", GameService.getMoveName());
+            model.addAttribute("name", GameService.getMovePlayer().getName());
+            if (GameService.getMovePlayer().getSymbol().equals("X")){
+                model.addAttribute("symbol", "крестики");
+            } else model.addAttribute("symbol", "нолики");
             model.addAttribute("field", GameService.showPlayingField(GameService.PLAYING_FIELD));
             return "/gameplay/repeatField";
         }
         // ищем победителя или ничью
-        if (GameService.movesCounter > 5 && GameService.movesCounter < 9) {
+        if (GameService.movesCounter > 4 && GameService.movesCounter < 9) {
             GameService.gameOver = GameXO.winnerSearch(GameService.PLAYING_FIELD);
         } else if (GameService.movesCounter > 8) GameService.gameOver = true;
         // сохраняем игровое поле для отображения
@@ -79,7 +88,10 @@ public class GameController {
         // продолжаем игру если она не окончена
         else {
             GameService.movesCounter++;
-            model.addAttribute("name", GameService.getMoveName());
+            model.addAttribute("name", GameService.getMovePlayer().getName());
+            if (GameService.getMovePlayer().getSymbol().equals("X")){
+                model.addAttribute("symbol", "крестики");
+            } else model.addAttribute("symbol", "нолики");
             return "/gameplay/field";
         }
     }
@@ -98,7 +110,11 @@ public class GameController {
         if (newGame.equalsIgnoreCase("Да")) {
             // очищаем все поля игры
             GameService.clearAll();
-            return "redirect:/gameplay/new-field";
+            model.addAttribute("name", GameService.getMovePlayer().getName());
+            if (GameService.getMovePlayer().getSymbol().equals("X")){
+                model.addAttribute("symbol", "крестики");
+            } else model.addAttribute("symbol", "нолики");
+            return "gameplay/field";
         } else // закрытие игры
             model.addAttribute("save", save);
         model.addAttribute("message", "Спасибо за игру! Заходите поиграть еще!");
@@ -108,9 +124,12 @@ public class GameController {
     // начала нового матча с сохранением имен и статистики игроков
     @GetMapping("/gameplay/new-field")
     public String newField(Model model) {
-        // сохраняем игровое поле для отображения
+        // игровое поле для отображения
         model.addAttribute("field", GameService.showPlayingField(GameService.PLAYING_FIELD));
-        model.addAttribute("name", GameService.getMoveName());
+        model.addAttribute("name", GameService.getMovePlayer().getName());
+        if (GameService.getMovePlayer().getSymbol().equals("X")){
+            model.addAttribute("symbol", "крестики");
+        } else model.addAttribute("symbol", "нолики");
         return "/gameplay/field";
     }
 
